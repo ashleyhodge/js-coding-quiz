@@ -4,6 +4,12 @@ var startButtonEl = document.querySelector("#start-btn");
 
     // Timer
 var timerEl = document.querySelector("#timer");
+timerEl.innerHTML = 0
+    // Start quiz variables
+var startEl = document.getElementById("start-page");
+var questionsPageEl = document.getElementById("questions-page");
+var answerChoicesEl = document.getElementById("answer-choices");
+var gameOver;
     
 
 //Create questions Array
@@ -36,5 +42,47 @@ var questions = [
     },
 ];
 
+// Set timer to start counting down
+var setTime = function() {
+    secondsLeft = 75;
+
+    var timerInterval = setInterval(function () {
+        timerEl.innerHTML = secondsLeft;
+        secondsLeft--
+        // if all questions get answered, stop timer
+        if (gameOver) {
+            clearInterval(timerInterval)
+        }
+        // if time runs out stop timer and move to final score page
+        //if(secondsLeft < 0) {
+            //displayScore()
+            //timerEl.innerHTML = 0
+            //clearInterval(secondsLeft)
+       // }
+     
+    }, 1000)
+}
 
 
+// Set questions to appear
+
+
+
+// start quiz function
+var startQuiz = function() {
+    // add and remove css classes to switch from start page to questions page
+    startEl.classList.add("hidden");
+    startEl.classList.remove("show");
+    questionsPageEl.classList.remove("hidden");
+    questionsPageEl.classList.add("show");
+    // Start timer and show first question
+    setTime()
+    //setQuestion()
+}
+
+var displayScore = function() {
+
+}
+
+// start quiz when start button is clicked
+startButtonEl.addEventListener("click",startQuiz)
