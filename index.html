@@ -12,32 +12,33 @@
     <header>
         <!-- View High Score Button-->
         <div>
-
+            <button class="high-score-btn" id="high-score-btn" type="button"> View High Scores </button>
         </div>
         <!-- Timer-->
         <div>
-
+            <span id="timer"> Seconds Left:</span>
         </div>
     </header>
     
     <main>
         <!-- Intial Start Quiz Screen -->
-        <section>
+        <section id="start-page" class="show">
             <!-- Title-->
             <div>
-
+                <h2>JavaScript Coding Quiz</h2>
             </div>
             <!-- Instructions-->
             <div>
-
+                <p> Try answering the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds. Good luck!
+                </p>
             </div>
             <!-- Start button-->
             <div>
-
+                <button class="start-btn" id="start-btn" type="button">Start Quiz!</button>
             </div>
         </section>
         <!-- Question Pages?-->
-        <section>
+        <section id="questions-page" class="hidden">
             <!-- Questions-->
             <div>
 
@@ -46,27 +47,29 @@
             <div>
 
             </div>
-        </section>
+        </section >
         <!-- Final Score Page -->
-        <section>
+        <section id="final-score" class="hidden">
             <!-- Page title -->
             <div>
-
+                <h2>All Done!</h2>
             </div>
             <!-- Enter Name -->
             <div>
-
+                <p>Enter Initials:</p>
             </div>
         </section>
         <!-- High Scores Page -->
-        <section>
+        <section id="high-score" class="hidden">
             <!-- High Scores List -->
             <div>
-
+                <h2>High Scores:</h2>
+                <ol></ol>
             </div>
             <!-- Play Again or Clear Scores Button-->
             <div>
-                
+                <button class="btn" id="play-again">Play Again</button>
+                <button class="btn" id="clear-scores">Clear High Scores</button>
             </div>
         </section>
     </main>
