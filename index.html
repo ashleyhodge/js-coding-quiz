@@ -11,66 +11,67 @@
     <!-- Create button to view high score & timer at the top of the page-->
     <header>
         <!-- View High Score Button-->
-        <div>
-            <button class="high-score-btn" id="high-score-btn" type="button"> View High Scores </button>
-        </div>
+        <p class="high-score-btn"></p>
         <!-- Timer-->
-        <div>
-            <h4>Seconds Left: <span id="timer"> Seconds Left:</span></h4>
-        </div>
+        <p class="timer">Seconds Left: <span id="timer"></span></p>
     </header>
     
-    <main>
         <!-- Intial Start Quiz Screen -->
-        <section id="start-page" class="show">
-            <!-- Title-->
-            <div>
-                <h2>JavaScript Coding Quiz</h2>
-            </div>
+    <section id="start-container" class="show">
+        <div class="start-box">
+                <!-- Title-->
+            <h2> JavaScript Coding Quiz </h2>
             <!-- Instructions-->
-            <div>
-                <p> Try answering the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds. Good luck!
+            <p> Try answering the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds. Good luck!
                 </p>
-            </div>
-            <!-- Start button-->
-            <div>
-                <button class="start-btn" id="start-btn" type="button">Start Quiz!</button>
-            </div>
-        </section>
-        <!-- Question Pages?-->
-        <section id="questions-page" class="hidden">
+                <!-- Start button-->
+            <button class="start-btn" id="start-btn" type="button">Start Quiz!</button>
+        </div>
+    </section>
+        <!-- Question Screen-->
+    <section id="question-container" class="hidden">
             <!-- Questions-->
+        <div id="question-box">
             <div id="question"></div>
             <!-- Answers -->
-            <div id="answer-choices"></div>
+            <div id="answer-buttons" class="answer-btn"></div>
+        </div>
         </section >
         <!-- Final Score Page -->
-        <section id="final-score" class="hidden">
+        <section id="final-score-container" class="hidden">
+            <div class="final-score-box">
             <!-- Page title -->
-            <div>
-                <h2>All Done!</h2>
-            </div>
+                <div id="final-score">
+                    <h2>Final Score</h2>
+                </div>
             <!-- Enter Name -->
-            <div>
-                <p>Enter Initials:</p>
-                <input type="text" name="initials" id="initials">
-                <button class="submit-btn" id="submit-btn" type="button">Submit</button>
+                <form id="intials-form" class="initials">
+                    <p> Enter Initials:
+                        <input type="text" name="initials" id="initials" class="text-input">
+                        <button class="submit-btn" id="submit-btn" type="button">Submit</button>
+                    </p>
+                </form>
             </div>
         </section>
         <!-- High Scores Page -->
-        <section id="high-score" class="hidden">
+        <section id="high-score-container" class="hidden">
             <!-- High Scores List -->
-            <div>
-                <h2>High Scores:</h2>
-                <ol></ol>
-            </div>
+            <div class="high-score-box">
+                <h2 class="high-score">High Scores:</h2>
+                <ol id="high-score-list" class="high-score-list"></ol>
             <!-- Play Again or Clear Scores Button-->
-            <div>
-                <button class="btn" id="play-again" type="button">Play Again</button>
-                <button class="btn" id="clear-scores" type="button">Clear High Scores</button>
+                <div>
+                    <button class="btn" id="play-again" type="button">Play Again</button>
+                    <button class="btn" id="clear-scores" type="button">Clear High Scores</button>
+                </div>
             </div>
         </section>
-    </main>
+        <div class="hidden" id="correct">
+            <h2>Good Job!</h2>
+        </div>
+        <div class="hidden" id="wrong">
+            <h2>Sorry ... no.</h2>
+        </div>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
