@@ -47,7 +47,7 @@ var startGame = function() {
     startContainerEl.classList.remove("show");
     questionContainerEl.classList.remove("hidden");
     questionContainerEl.classList.add("show");
-    //Shuffle the questions so they show in random order
+    //found through googlefuing - somehow solved problem with displaying questions
     arrQuestions = questions.sort(() => Math.random() - 0.5)
     setTime()
     setQuestion()
@@ -75,15 +75,11 @@ var startGame = function() {
   }
 
   var setQuestion = function() {
-    resetAnswers()
+  
     displayQuestion(arrQuestions[QuestionIndex])
   }
 
-  var resetAnswers = function() {
-    while (answerButtonsEl.firstChild) {
-        answerButtonsEl.removeChild(answerButtonsEl.firstChild)
-    };
-  };
+
 
   var displayQuestion = function(index) {
     questionEl.innerText = index.question
@@ -92,28 +88,15 @@ var startGame = function() {
         answerbutton.innerText = index.choices[i].choice
         answerbutton.classList.add("btn")
         answerbutton.classList.add("answerbtn")
-        answerbutton.addEventListener("click", answerCheck)
+        //answerbutton.addEventListener("click", )
         answerButtonsEl.appendChild(answerbutton)
         }
     };
 
-    var answerCheck = function(event) {
-        var selectedanswer = event.target
-            if (arrQuestions[QuestionIndex].answer === selectedanswer.innerText){
-                answerCorrect()
-                score = score + 10
-            }
-        }
+   
 
 
-  var answerCorrect = function() {
-        if (correctEl.className = "hidden") {
-            correctEl.classList.remove("hidden")
-            correctEl.classList.add("banner")
-            wrongEl.classList.remove("banner")
-            wrongEl.classList.add("hidden")
-            }
-        }  
+   
 
 
         startButton.addEventListener("click", startGame)
