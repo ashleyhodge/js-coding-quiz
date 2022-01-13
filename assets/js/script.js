@@ -1,21 +1,7 @@
-// Global Variable
-var startContainerEl = document.getElementById("start-container");
-var questionContainerEl = document.getElementById("question-container");
-var arrQuestions
-var gameover
-var timerEl = document.querySelector("#timer");
-timerEl.innerText = 0;
-var startButton = document.querySelector("#start-btn");
-var QuestionIndex = 0
-var answerButtonsEl = document.getElementById("answer-buttons")
-var questionEl = document.getElementById("question")
-var correctEl = document.getElementById("correct")
-var wrongEl = document.getElementById("wrong")
 // Array of questions & answers
-
 var questions = [
     { 
-        question: "String values must be enclosed within ______ whenbeing assigned to variables.", 
+        question: "String values must be enclosed within ______ when being assigned to variables.", 
         choices: [{choice: "1. commas"}, {choice: "2. curly brackets"}, {choice: "3. quotes"}, {choice: "4. parenthesis"}],
         answer: "4. parenthesis", 
       },
@@ -31,7 +17,7 @@ var questions = [
     },
     {   
         question: "The condition in an if/else statement is enclosed with _______.",   
-        choices: [{choice: "1. quotes"}, {choice: "2. curly brackets"}, {choice: "3. parenthesis"}, {choice: "square brackets"}],
+        choices: [{choice: "1. quotes"}, {choice: "2. curly brackets"}, {choice: "3. parenthesis"}, {choice: "4. square brackets"}],
         answer: "3. parenthesis", 
     },
     { 
@@ -40,63 +26,88 @@ var questions = [
         answer: "4. all of the above", 
     },
   ];
+
+// Global Variable
+var startContainerEl = document.getElementById("start-container");
+var questionContainerEl = document.getElementById("question-container");
+var arrQuestions
+var gameOver
+var timerEl = document.querySelector("#timer");
+timerEl.innerText = 0;
+var startButton = document.querySelector("#start-btn");
+var questionNum = 0
+var answerButtonsEl = document.getElementById("answer-buttons")
+var questionEl = document.getElementById("question")
+var correctEl = document.getElementById("correct")
+var wrongEl = document.getElementById("wrong")
+var score = 0
+
 // Functions
-var startGame = function() {
-    //add classes to show/hidden start and quiz screen
-    startContainerEl.classList.add("hidden");
-    startContainerEl.classList.remove("show");
-    questionContainerEl.classList.remove("hidden");
-    questionContainerEl.classList.add("show");
-    //found through googlefuing - somehow solved problem with displaying questions
-    arrQuestions = questions.sort(() => Math.random() - 0.5)
+var startQuiz = function() {
+    // change display 
+    startContainerEl.style.display = "none"
+    questionContainerEl.style.display = "block"
+   
+    //found through googlefuing - solved problem with displaying questions
+    arrQuestions = questions.sort(() => Math.random() - 0.5) 
     setTime()
     setQuestion()
   }
-
-
+// Start time countdown
   var setTime = function () {
-    timeleft = 75;
-  
-  var timercheck = setInterval(function() {
-    timerEl.innerText = timeleft;
-    timeleft--
-  
-    if (gameover) {
-        clearInterval(timercheck)
-    }
-   
-    //if (timeleft < 0) {
+    secondsLeft = 75;
+    var timeCheck = setInterval(function() {
+        timerEl.innerText = secondsLeft;
+        secondsLeft--
+        if (gameOver) {
+            clearInterval(timeCheck)
+        }
+    //if (secondsLeft < 0) {
         //showScore()
         //timerEl.innerText = 0
-        //clearInterval(timercheck)
+        //clearInterval(timeCheck)
     //}
   
     }, 1000)
   }
 
   var setQuestion = function() {
-  
-    displayQuestion(arrQuestions[QuestionIndex])
+    displayQuestion(arrQuestions[questionNum])
   }
-
-
-
-  var displayQuestion = function(index) {
-    questionEl.innerText = index.question
-    for (var i = 0; i < index.choices.length; i++) {
-        var answerbutton = document.createElement("button")
-        answerbutton.innerText = index.choices[i].choice
-        answerbutton.classList.add("btn")
-        answerbutton.classList.add("answerbtn")
-        //answerbutton.addEventListener("click", )
-        answerButtonsEl.appendChild(answerbutton)
+ // Display 1st question and its answer choices from array
+  var displayQuestion = function(num) {
+    questionEl.innerText = num.question
+    for (var i = 0; i < num.choices.length; i++) {
+        var answerButton = document.createElement("button")
+        answerButton.innerText = num.choices[i].choice
+        answerButton.addEventListener("click", checkAnswer)
+        answerButtonsEl.appendChild(answerButton)
         }
     };
-
+// Check to see if the answer being clicked is correct or wrong
+    var checkAnswer = function(event) {
+        var answerSelect = event.target
+            if(arrQuestions[questionNum].answer === answerSelect.innerHTML){
+                correct()
+                score = score + 10;
+            }
+            else {
+                wrong()
+                score = score - 5;
+                secondsLeft = secondsLeft -10;
+            }
+    };
+    var correct = function() {
+        if (correctEl.className = "hidden") {
+            correctEl.style.display = "block"
+        }
+    }
+    var wrong = function() {
+        if (wrongEl.className = "hidden") {
+            wrongEl.style.display = "block"
+        }
+    }
    
 
 
-   
-
-
-        startButton.addEventListener("click", startGame)
+        startButton.addEventListener("click", startQuiz)
