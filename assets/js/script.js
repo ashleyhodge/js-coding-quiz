@@ -1,3 +1,25 @@
+// Global Variable
+var startContainerEl = document.getElementById("start-container");
+var questionContainerEl = document.getElementById("question-container");
+var arrQuestions
+var gameOver
+var timerEl = document.querySelector("#timer");
+timerEl.innerText = 0;
+var startButton = document.querySelector("#start-btn");
+var questionNum = 0
+var answerButtonsEl = document.getElementById("question")
+var questionEl = document.getElementById("question")
+var correctEl = document.getElementById("correct")
+var wrongEl = document.getElementById("wrong")
+var score = 0
+var finalScoreContainer = document.getElementById("final-score-container")
+var containerScoreEl = document.getElementById("final-score")
+var submitButton = document.querySelector("#submit-btn");
+var containerHighScoresEl = document.getElementById("high-score-container")
+
+
+
+
 // Array of questions & answers
 var questions = [
     { 
@@ -27,26 +49,15 @@ var questions = [
     },
   ];
 
-// Global Variable
-var startContainerEl = document.getElementById("start-container");
-var questionContainerEl = document.getElementById("question-container");
-var arrQuestions
-var gameOver
-var timerEl = document.querySelector("#timer");
-timerEl.innerText = 0;
-var startButton = document.querySelector("#start-btn");
-var questionNum = 0
-var answerButtonsEl = document.getElementById("answer-buttons")
-var questionEl = document.getElementById("question")
-var correctEl = document.getElementById("correct")
-var wrongEl = document.getElementById("wrong")
-var score = 0
+
 
 // Functions
 var startQuiz = function() {
     // change display 
-    startContainerEl.style.display = "none"
-    questionContainerEl.style.display = "block"
+    startContainerEl.classList.add("hidden");
+    startContainerEl.classList.remove("show");
+    questionContainerEl.classList.remove("hidden");
+    questionContainerEl.classList.add("show")
    
     //found through googlefuing - solved problem with displaying questions
     arrQuestions = questions.sort(() => Math.random() - 0.5) 
@@ -63,7 +74,7 @@ var startQuiz = function() {
             clearInterval(timeCheck)
         }
     //if (secondsLeft < 0) {
-        //showScore()
+        //displayScore()
         //timerEl.innerText = 0
         //clearInterval(timeCheck)
     //}
@@ -83,6 +94,7 @@ var startQuiz = function() {
         answerButton.addEventListener("click", checkAnswer)
         answerButtonsEl.appendChild(answerButton)
         }
+       
     };
 // Check to see if the answer being clicked is correct or wrong
     var checkAnswer = function(event) {
@@ -95,19 +107,79 @@ var startQuiz = function() {
                 wrong()
                 score = score - 5;
                 secondsLeft = secondsLeft -10;
+            };
+     
+        // move on to next question in array - ** new choices appearing but old ones not going away **
+        questionNum++
+         if  (arrQuestions.length > questionNum) {
+            setQuestion(questionNum)
+        }   
+        else {
+           gameOver = "true";
+           questionContainerEl.classList.add("hidden")
+           questionContainerEl.classList.remove("show")
+           displayScore();
             }
+        
     };
     var correct = function() {
         if (correctEl.className = "hidden") {
-            correctEl.style.display = "block"
-        }
-    }
-    var wrong = function() {
+            correctEl.classList.remove("hidden")
+            correctEl.classList.add("banner")
+            wrongEl.classList.remove("banner")
+            wrongEl.classList.add("hidden")
+            }
+        }  
+      //display wrong! on screen
+      var wrong = function() {
         if (wrongEl.className = "hidden") {
-            wrongEl.style.display = "block"
+            wrongEl.classList.remove("hidden")
+            wrongEl.classList.add("banner")
+            correctEl.classList.remove("banner")
+            correctEl.classList.add("hidden")
         }
-    }
+      }
    
+      var displayScore = function () {
+        questionContainerEl.classList.add("hidden");
+        finalScoreContainer.classList.remove("hidden");
+        finalScoreContainer.classList.add("show");
+      
+        var scoreText = document.createElement("h4");
+        scoreText.innerText = ("Your final score is " + score + "!");
+        containerScoreEl.appendChild(scoreText);
+        console.log(scoreText)
 
+        if (correctEl.className = "show") {
+            correctEl.classList.remove("show");
+            correctEl.classList.add("hidden");
+        }
+      
+        if (wrongEl.className = "show") {
+            wrongEl.classList.remove("show");
+            wrongEl.classList.add("hidden");
+            }
+      }  
+
+      var createHighScore = function(event) {
+          event.preventDefault()
+          var initials = document.querySelector("#initials").value;
+          if (initials = false) {
+              prompt("Please enter initials!");
+              return;
+          }
+          displayHighScore();
+      }
+
+      var displayHighScore = function() {
+        containerHighScoresEl.classList.remove("hidden");
+        containerHighScoresEl.classList.add("show");
+        //gameOver = "true"
+        if (finalScoreContainer.className = "show") {
+            finalScoreContainer.classList.remove("show");
+            finalScoreContainer.classList.add("hidden");
+        }
+      }
 
         startButton.addEventListener("click", startQuiz)
+        submitButton.addEventListener("click", createHighScore)
