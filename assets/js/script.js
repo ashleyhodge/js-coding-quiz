@@ -13,12 +13,14 @@ var correctEl = document.getElementById("correct")
 var wrongEl = document.getElementById("wrong")
 var score = 0
 var finalScoreContainer = document.getElementById("final-score-container")
-var containerScoreEl = document.getElementById("final-score")
+var finalScore = document.getElementById("final-score")
 var submitButton = document.querySelector("#submit-btn");
-var containerHighScoresEl = document.getElementById("high-score-container")
-
-
-
+var highScoreContainerEl = document.getElementById("high-score-container")
+var listHighScoreEl = document.getElementById("high-score-list")
+var formInitials = document.getElementById("initials-form")
+var clearScoresButton = document.querySelector("#clear-scores")
+var playAgainButton = document.querySelector("#play-again")
+var viewHighScoresButton = document.querySelector("#high-score-btn")
 
 // Array of questions & answers
 var questions = [
@@ -48,7 +50,8 @@ var questions = [
         answer: "4. all of the above", 
     },
   ];
-
+  // Empty High Scores Array
+var arrHighScores = [];
 
 
 // Functions
@@ -60,7 +63,7 @@ var startQuiz = function() {
     questionContainerEl.classList.add("show")
    
     //found through googlefuing - solved problem with displaying questions
-    arrQuestions = questions.sort(() => Math.random() - 0.5) 
+    arrQuestions = questions.sort() 
     setTime()
     setQuestion()
   }
@@ -73,11 +76,16 @@ var startQuiz = function() {
         if (gameOver) {
             clearInterval(timeCheck)
         }
-    //if (secondsLeft < 0) {
-        //displayScore()
-        //timerEl.innerText = 0
-        //clearInterval(timeCheck)
-    //}
+    if (secondsLeft < 0) {
+        displayScore()
+        timerEl.innerText = 0
+        clearInterval(timeCheck)
+        if (questionContainerEl.className = "show") {
+            questionContainerEl.classList.remove("show");
+            questionContainerEl.classList.add("hidden");
+        }
+
+    }
   
     }, 1000)
   }
@@ -147,7 +155,7 @@ var startQuiz = function() {
       
         var scoreText = document.createElement("h4");
         scoreText.innerText = ("Your final score is " + score + "!");
-        containerScoreEl.appendChild(scoreText);
+        finalScore.appendChild(scoreText);
         console.log(scoreText)
 
         if (correctEl.className = "show") {
@@ -164,22 +172,93 @@ var startQuiz = function() {
       var createHighScore = function(event) {
           event.preventDefault()
           var initials = document.querySelector("#initials").value;
-          if (initials = false) {
-              prompt("Please enter initials!");
+
+          if (!initials) {
               return;
           }
+        formInitials.reset();
+
+          var highScore = {
+            initials:initials,
+            score:score
+            }
+
+            arrHighScores.push(highScore);
+            arrHighScores.sort((a, b)=> {return b.score - a.score});
+
+            while (listHighScoreEl.firstChild) {
+                listHighScoreEl.removeChild(listHighScoreEl.firstChild)
+               }
+
+            for (var i = 0; i < arrHighScores.length; i++) {
+                var highScoreEl = document.createElement("li");
+                highScoreEl.ClassName = "high-score";
+                highScoreEl.innerHTML = arrHighScores[i].initials + " - " + arrHighScores[i].score;
+                listHighScoreEl.appendChild(highScoreEl);
+                }
+
           displayHighScore();
+          saveHighScore();
+      }
+      // save high scores in local storage
+      var saveHighScore = function() {
+          localStorage.setItem("highScores", JSON.stringify(arrHighScores))
+            }
+
+      //call high scores to load on the page
+      var loadHighScores = function () {
+        var locHighScores = localStorage.getItem("arrHighScores")
+            if (!locHighScores) {
+                return false;
+            }
+
+        locHighScores = JSON.parse(locHighScores);
+        locHighScores.sort((a, b) => {return b.score-a.score})
+        
+
+        for (var i = 0; i < locHighScores.length; i++) {
+            var highScoreEl = document.createElement("li");
+            highScoreEl.ClassName = "high-score";
+            highScoreEl.innerHTML = locHighScores[i].initials + " - " + locHighScores[i].score;
+            listHighScoreEl.appendChild(highScoreEl);
+
+            arrHighScores.push(locHighScores[i]);
+        }
       }
 
-      var displayHighScore = function() {
-        containerHighScoresEl.classList.remove("hidden");
-        containerHighScoresEl.classList.add("show");
-        //gameOver = "true"
+    var displayHighScore = function() {
+        
         if (finalScoreContainer.className = "show") {
             finalScoreContainer.classList.remove("show");
             finalScoreContainer.classList.add("hidden");
         }
-      }
+       if (highScoreContainerEl.className = "hidden");
+        highScoreContainerEl.classList.add("show");
+        gameOver = "true"
+    }
+    var clearHighScores = function() {
+        arrHighScores = [];
+        while (listHighScoreEl.firstChild) {
+            listHighScoreEl.removeChild(listHighScoreEl.firstChild);
+        }
+        localStorage.clear(arrHighScores);
+    }
+     
+    var playAgain = function () {
+        highScoreContainerEl.classList.remove("show")
+        highScoreContainerEl.classList.add("hidden")  
+        startContainerEl.classList.add("show")
+        startContainerEl.classList.remove("hidden")
+        finalScoreContainer.removeChild(finalScoreContainer.lastChild)
+        questionNum = 0
+        timerEl.textContent = 0
+        score = 0 
+        //startButton.addEventListener("click", startQuiz);
+       
+    }
 
-        startButton.addEventListener("click", startQuiz)
-        submitButton.addEventListener("click", createHighScore)
+        startButton.addEventListener("click", startQuiz);
+        formInitials.addEventListener("click", createHighScore);
+        clearScoresButton.addEventListener("click", clearHighScores);
+        playAgainButton.addEventListener("click", playAgain);
+        viewHighScoresButton.addEventListener("click",displayHighScore)
