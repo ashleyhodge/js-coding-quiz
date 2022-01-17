@@ -19,22 +19,19 @@ header {
     justify-content: space-between;
     margin: 30px;
 }
-#high-score-btn {
-    border-radius: 50px;
-    height: 25px;
-    width: 150px;
-    border: none;
-    margin: 13px;
-    font-size: 15px;
-    background-color: #f1bb14;
-    color: #490b3d;
-}
-#high-score-btn:hover {
-    background-color: #bd1e51;
-    color: #dddfd4;
-    cursor: pointer;
-}
 
+
+button {
+    display: block;
+    border: none;
+    border-radius: 50px;
+    margin-left: 40%;
+    margin-top: 20px;
+    font-size: 20px;
+    height: 40px;
+    width: 200px;
+    padding-top: 2px;
+}
 button:hover {
     color: #dddfd4;
     background-color: #bd1e51;
@@ -59,17 +56,39 @@ h2 {
 }
 .start-btn {
     border-radius: 20px;
-    padding: 20px;
     color: #dddfd4;
     background-color: #bd1e51;
-    margin: 20px;
-    font-size: 20px;
+    flex-direction: column;
+    font-size: 25px;
     border: none;
+   
 }
 .start-btn:hover {
     color: #490b3d;
     background-color: #f1bb14;
 }
-#answer {
-    align-items: center;
+#high-score-btn {
+    border-radius: 50px;
+    height: 25px;
+    width: 150px;
+    border: none;
+    margin: 13px;
+    font-size: 15px;
+    background-color: #f1bb14;
+    color: #490b3d;
+}
+#high-score-btn:hover {
+    background-color: #bd1e51;
+    color: #dddfd4;
+    cursor: pointer;
+}
+#question-container {
+    font-size: 30px;
+    margin:20px;
+}
+.submit-btn {
+   margin-left: 10%;
+}
+.btn {
+   margin-left: 10%;
 }

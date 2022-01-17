@@ -166,7 +166,7 @@ var startQuiz = function() {
         if (wrongEl.className = "show") {
             wrongEl.classList.remove("show");
             wrongEl.classList.add("hidden");
-            }
+        }
       }  
 
       var createHighScore = function(event) {
@@ -227,14 +227,23 @@ var startQuiz = function() {
       }
 
     var displayHighScore = function() {
-        
+        highScoreContainerEl.className = "hidden";
+        highScoreContainerEl.classList.add("show");
+        gameOver = "true"
+
         if (finalScoreContainer.className = "show") {
             finalScoreContainer.classList.remove("show");
             finalScoreContainer.classList.add("hidden");
         }
-       if (highScoreContainerEl.className = "hidden");
-        highScoreContainerEl.classList.add("show");
-        gameOver = "true"
+       if (startContainerEl.className = "show") {
+           startContainerEl.classList.remove("show");
+           startContainerEl.classList.add("hidden");  
+       }
+       if (questionContainerEl.className = "show") {
+           questionContainerEl.classList.remove("show");
+           questionContainerEl.classList.add("hidden");
+       }
+    
     }
     var clearHighScores = function() {
         arrHighScores = [];
@@ -253,9 +262,9 @@ var startQuiz = function() {
         questionNum = 0
         timerEl.textContent = 0
         score = 0 
-        //startButton.addEventListener("click", startQuiz);
-       
     }
+
+
 
         startButton.addEventListener("click", startQuiz);
         formInitials.addEventListener("click", createHighScore);
